@@ -1,17 +1,10 @@
-FROM 416670754337.dkr.ecr.eu-west-2.amazonaws.com/ci-core-runtime:1.1.0
+FROM python:3.13-alpine
 
-RUN dnf install -y \
-        git \
-        python3.13 \
-        python3.13-pip
+RUN apk update && \
+    apk add git    
 
-ENV VIRTUAL_ENV=/opt/python
+COPY base-requirements.txt /tmp/
 
-RUN mkdir $VIRTUAL_ENV && \
-    python3.13 -m venv $VIRTUAL_ENV
+RUN pip install --no-cache-dir -r /tmp/base-requirements.txt
 
-ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-
-RUN pip --no-cache-dir install \
-        aws-encryption-sdk==3.3.1 \
-        PyYAML==6.0
+ENTRYPOINT ["/bin/sh"]

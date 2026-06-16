@@ -1,21 +1,14 @@
 # ci-python-runner
-Provides a Docker image for python tasks
 
-## Virtualenv Notes
+Provides a basic, Python container to be used to Python based Concourse tasks
 
-Form version `3.13` onwards, this image will be based on the current `ci-core-runtime` image,
-which is itself based on `Amazon Linux 2023`. Amazon Linux has Python 3.9 installed as the
-'system' Python and whilst other versions are officially packaged and available to install, it
-is heavily discouraged to modify the system symlinks to point to them.
+## UV
 
-To ease use of the non-system Python package the container does the following:
+From 3.13 onwards, the build includes `uv` which can be used to manage
+environmental requirements for jobs (i.e. can replace `pip`, `pyenv`, etc)
 
-* installs `python3.13` and `python3.13-pip`
-* creates an `/opt/python` directory
-* creates a `3.13` virtualenv within it
-* sets a `VIRTUAL_ENV` variable pointing to this location
-* updates the `PATH` to search under `$VIRTUAL_ENV/bin` for Python binaries
+`uv` allows all requiments/dependencies to be recorded in a file `pyproject.toml`
+in your project and then a Python script can be run via `uv run ...` and `uv`
+will handle ensuring the environment requirements are met.
 
-This works as long as `PATH` is set appropriately. Care should be taken in cases where sub-shells
-maybe created without the updated `PATH` being maintained.
-
+[UV Documentation](https://docs.astral.sh/uv/)
