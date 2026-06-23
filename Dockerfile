@@ -1,7 +1,11 @@
-FROM python:3.11
+FROM python:3.13-alpine
 
-RUN pip --no-cache-dir install \
-    aws-encryption-sdk==3.1.1 \
-    PyYAML==6.0
+RUN apk add --no-cache git=2.54.0-r0 && \
+    rm -rf /var/cache/apk/*
 
-ENTRYPOINT ["/bin/bash"]
+COPY base-requirements.txt /tmp/
+
+RUN pip install --no-cache-dir -r /tmp/base-requirements.txt && \
+    rm /tmp/base-requirements.txt
+
+ENTRYPOINT ["/bin/sh"]
