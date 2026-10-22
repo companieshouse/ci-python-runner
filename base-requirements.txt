@@ -1,4 +1,4 @@
-aws-encryption-sdk==3.3.1
+aws-encryption-sdk==4.0.7
 PyYAML==6.0.3
-uv==0.11.21
-semver==3.0.4
+uv==0.13.5
+semver==3.1.0
